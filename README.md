@@ -1,6 +1,6 @@
 # mongo-ruby-driver-segfault
 
-This is the example that `mongo-ruby-driver` cause the segfault.
+This is the example that `mongo-ruby-driver` causes the segfault.
 
 ## Prerequisites
 
