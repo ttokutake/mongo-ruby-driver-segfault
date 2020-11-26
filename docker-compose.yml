@@ -1,7 +1,9 @@
 version: "3.8"
 services:
   ruby:
-    image: ruby:2.6.6-stretch
+    image: ruby:2.6.6 # causes the segfault.
+    # image: ruby:2.7.2 # causes the segfault.
+    # image: ruby:3.0.0-preview1 # with mongo-ruby-driver 2.13.1 does not cause the segfault.
     working_dir: /app
     volumes:
       - .:/app
