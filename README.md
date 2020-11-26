@@ -16,6 +16,19 @@ $ docker-compose run ruby /bin/bash
 > ruby main.rb
 ```
 
+## Results
+
+- Ruby 2.6.6p146 (2020-03-31 revision 67876) [x86_64-linux]
+  - mongo-ruby-driver 2.10.5: OK
+  - mongo-ruby-driver 2.11.0: Segfault
+  - mongo-ruby-driver 2.13.1: Segfault
+- Ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64-linux]
+  - mongo-ruby-driver 2.10.5: OK
+  - mongo-ruby-driver 2.11.0: Segfault
+  - mongo-ruby-driver 2.13.1: Segfault
+- Ruby 3.0.0preview1 (2020-09-25 master 0096d2b895) [x86_64-linux]
+  - mongo-ruby-driver 2.13.1: OK
+
 ## Consideration
 
 - Caused by [this bug](https://bugs.ruby-lang.org/issues/16288)?
