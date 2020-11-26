@@ -16,6 +16,11 @@ $ docker-compose run ruby /bin/bash
 > ruby main.rb
 ```
 
+## Consideration
+
+Caused by [this bug](https://bugs.ruby-lang.org/issues/16288)?
+There is [a similar output](https://github.com/ruby-concurrency/concurrent-ruby/issues/808#issuecomment-534944201).
+
 ## Special Thanks
 
 - https://github.com/bitnami/bitnami-docker-mongodb-sharded
