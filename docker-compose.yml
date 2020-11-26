@@ -1,0 +1,51 @@
+version: "3.8"
+services:
+  ruby:
+    image: ruby:2.6.6-stretch
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on: ["dns.local"]
+  dns.local:
+    image: jpillora/dnsmasq
+    entrypoint: >
+      dnsmasq
+        --conf-file=''
+        --resolv-file=/etc/resolv.conf
+        --no-daemon
+        --log-queries
+        --log-facility=-
+        --srv-host '_mongodb._tcp.mongodb.cluster.local,mongodb-sharded.cluster.local,27017'
+        --txt-record 'mongodb.cluster.local'
+    depends_on: ["mongodb-sharded.cluster.local"]
+  mongodb-sharded.cluster.local:
+    image: 'docker.io/bitnami/mongodb-sharded:4.4-debian-10'
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-sharded
+      - MONGODB_SHARDING_MODE=mongos
+      - MONGODB_CFG_PRIMARY_HOST=mongodb-cfg
+      - MONGODB_CFG_REPLICA_SET_NAME=cfgreplicaset
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_ROOT_PASSWORD=password123
+    ports:
+      - "27017:27017"
+    depends_on: ["mongodb-shard0", "mongodb-cfg"]
+  mongodb-shard0:
+    image: 'docker.io/bitnami/mongodb-sharded:4.4-debian-10'
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-shard0
+      - MONGODB_SHARDING_MODE=shardsvr
+      - MONGODB_MONGOS_HOST=mongodb-sharded.cluster.local
+      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_REPLICA_SET_NAME=shard0
+  mongodb-cfg:
+    image: 'docker.io/bitnami/mongodb-sharded:4.4-debian-10'
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-cfg
+      - MONGODB_SHARDING_MODE=configsvr
+      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_REPLICA_SET_NAME=cfgreplicaset
