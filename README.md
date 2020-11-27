@@ -18,6 +18,37 @@ $ docker-compose run ruby /bin/bash
 
 ## Results
 
+```
+Fetching gem metadata from https://rubygems.org/........
+Resolving dependencies...
+Fetching bson 4.11.1
+Installing bson 4.11.1 with native extensions
+Using bundler 1.17.2
+Fetching mongo 2.11.0
+Installing mongo 2.11.0
+D, [2020-11-27T00:20:31.035863 #11] DEBUG -- : MONGODB | EVENT: #<TopologyOpening topology=Unknown[]>
+...
+D, [2020-11-27T00:20:31.145112 #11] DEBUG -- : MONGODB | [14] mongodb-sharded.cluster.local:27017 | admin.endSessions | SUCCEEDED | 0.000s
+[BUG] Segmentation fault at 0x0000000000000050
+ruby 2.6.6p146 (2020-03-31 revision 67876) [x86_64-linux]
+
+-- Control frame information -----------------------------------------------
+c:0001 p:---- s:0003 e:000002 (none) [FINISH]
+
+
+-- Machine register context ------------------------------------------------
+ RIP: 0x00007f52358f4078 RBP: 0x00007f5230b4fdd0 RSP: 0x00007f5230b4fc90
+ RAX: 0x0000000000000000 RBX: 0x0000563b4b746370 RCX: 0x0000563b44ad4158
+ RDX: 0x0000563b44ad4570 RDI: 0x0000563b4b8bd318 RSI: 0x0000563b44ad4020
+  R8: 0x0000000000000011  R9: 0x0000000000000000 R10: 0x0000563b4a8dc050
+ R11: 0x0000000000000003 R12: 0x0000000000000009 R13: 0x0000563b44b7f630
+ R14: 0x0000563b46ce6ac0 R15: 0x0000563b498440d8 EFL: 0x0000000000010297
+
+-- C level backtrace information -------------------------------------------
+corrupted double-linked list
+Aborted
+```
+
 - Ruby 2.6.6p146 (2020-03-31 revision 67876) [x86_64-linux]
   - mongo-ruby-driver 2.10.5: OK
   - mongo-ruby-driver 2.11.0: Segfault
